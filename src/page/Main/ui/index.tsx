@@ -80,21 +80,21 @@ const MainPage = () => {
             {
                 players ?
                 <div className='flex mx-auto items-center gap-4 relative mt-6'>
-                    <iframe src={players[player].iframeUrl} allowFullScreen width={698} className='rounded-[8px]' height={398}></iframe>
-                    <div className='flex flex-col items-center gap-2 absolute left-[calc(100%+1rem)] max-h-[400px] overflow-y-scroll'>
+                    <iframe src={players[player].iframeUrl} allowFullScreen width={698} className='rounded-[8px] phone:w-[calc(100%-4px)] phone:h-[200px]' height={398}  />
+                    <div className='flex flex-col phone:flex-row phone:flex-wrap items-center gap-2 absolute left-[calc(100%+1rem)] phone:left-0 phone:top-[calc(100%+1rem)] max-h-[400px] overflow-y-scroll phone:max-h-[200px]'>
                         {
                             players.map((player, id) => {
-                                return <button onClick={() => setPlayer(id)} key={id} className='p-2 px-3 w-full rounded-[8px] bg-[white] bg-opacity-20 text-text'>{player.source}</button>
+                                return <button onClick={() => setPlayer(id)} key={id} className='p-2 px-3 w-full phone:w-max rounded-[8px] bg-[white] bg-opacity-20 text-text'>{player.source}</button>
                             })
                         }
                     </div>
                 </div>
                 :
                 type === 'kinopoisk' ?
-                    <Image  src={require('../assets/ScreenRecording2024-02-21at13.11.40-ezgif.com-video-to-gif-converter.gif').default} alt='modal' width={698} height={398} className='mx-auto' />
+                    <Image  src={require('../assets/ScreenRecording2024-02-21at13.11.40-ezgif.com-video-to-gif-converter.gif').default} alt='modal' width={698} height={398} className='mx-auto phone:w-[calc(100%-1rem)]' />
                 :
                 type === 'imdb' ?
-                    <Image src={require('../assets/ScreenRecording2024-02-21at13.22.19-ezgif.com-video-to-gif-converter.gif').default} alt='modal' width={698} height={398}  className='mx-auto'/>
+                    <Image src={require('../assets/ScreenRecording2024-02-21at13.22.19-ezgif.com-video-to-gif-converter.gif').default} alt='modal' width={698} height={398}  className='mx-auto phone:w-[calc(100%-1rem)]'/>
                     :
                     <div className='w-[698px] phone:w-[calc(100%-1rem)] h-[389px] bg-[rgba(0,0,0,0.4)] rounded-[8px] mx-auto mt-6 flex'>
                     </div>
