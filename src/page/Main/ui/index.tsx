@@ -19,15 +19,24 @@ const MainPage = () => {
     const [modal, setModal] = useState(false);
 
     const handleClick = async () => {
-
-        const res = await axios.get(`https://kinobox.tv/api/players/main?${title ? `${type}=${title}` : `${type}=${theid}`}`, {
+        const res = await axios.get<{ iframeUrl: string; source: string; }[]>(`https://kinobox.tv/api/players/all?${title ? `${type}=${title}` : `${type}=${theid}`}`, {
             headers: {
                 'Content-Type': 'application/x-www-form-urlencoded'
             }
-        })
-        if (res.data) setPlayers(res.data);
-        
-    }
+        });
+        if (res.data) {
+            const uniqueSources: { [key: string]: boolean } = {};
+            const filteredPlayers = res.data.filter(player => {
+                if (!uniqueSources[player.source]) {
+                    uniqueSources[player.source] = true;
+                    return true;
+                }
+                return false;
+            });
+            setPlayers(filteredPlayers);
+        }
+    };
+    
 
     useEffect(() => {
         const handleClickOutside = (event: MouseEvent) => {
