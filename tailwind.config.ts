@@ -11,6 +11,11 @@ const config: Config = {
         "gradient-conic":
           "conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))",
       },
+      screens: {
+        phone: { max: "810px" },
+        desktop: { min: "810px" },
+      },
+
       colors: {
         main: "#323031",
         text: "#FFFFFF"

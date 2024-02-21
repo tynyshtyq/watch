@@ -20,7 +20,7 @@ const MainPage = () => {
 
     const handleClick = async () => {
 
-        const res = await axios.get(`https://kinobox.tv/api/players/main?${title ? `${type}=${title}` : `${type}=${theid}`}`, {
+        const res = await axios.get(`https://kinobox.tv/api/players/all?${title ? `${type}=${title}` : `${type}=${theid}`}`, {
             headers: {
                 'Content-Type': 'application/x-www-form-urlencoded'
             }
@@ -56,7 +56,7 @@ const MainPage = () => {
         <div className='!bg-main w-screen h-screen flex flex-col gap-4'>
             <h1 className='text-text mt-4 mb-1 p-0 mx-auto text-[24px]'>Watch</h1>
             <p className='mx-auto w-full mt-0 p-0 text-center text-text max-w-[600px]'>Don&apos;t waste time searching for a movie viewing site. Just enter an ID or name of the film and start eating your delicious dish!</p>
-            <div className="w-full max-w-[500px] mx-auto flex items-center gap-2">
+            <div className="w-full phone:w-[calc(100%-1rem)] max-w-[500px] mx-auto flex items-center gap-2">
                 { type !== 'title' && <button className='bg-[white] outline-0 hover:bg-opacity-40 duration-150 text-[white] bg-opacity-20 py-2 px-4 rounded-[8px]' onClick={handleModal}>?</button>}
                 <div className='relative w-max flex'>
                     
@@ -90,7 +90,7 @@ const MainPage = () => {
                     </div>
                 </div>
                 :
-                <div className='w-[698px] h-[389px] bg-[rgba(0,0,0,0.4)] rounded-[8px] mx-auto mt-6 flex'>
+                <div className='w-[698px] phone:w-[calc(100%-1rem)] h-[389px] bg-[rgba(0,0,0,0.4)] rounded-[8px] mx-auto mt-6 flex'>
                 </div>
             }
             {
