@@ -55,7 +55,7 @@ const MainPage = () => {
     return (
         <div className='!bg-main w-screen h-screen flex flex-col gap-4'>
             <h1 className='text-text mt-4 mb-1 p-0 mx-auto text-[24px]'>Watch</h1>
-            <p className='mx-auto w-full mt-0 p-0 text-center text-text max-w-[600px]'>Don't waste time searching for a movie viewing site. Just enter an ID or name of the film and start eating your delicious dish!</p>
+            <p className='mx-auto w-full mt-0 p-0 text-center text-text max-w-[600px]'>Don&apos;t waste time searching for a movie viewing site. Just enter an ID or name of the film and start eating your delicious dish!</p>
             <div className="w-full max-w-[500px] mx-auto flex items-center gap-2">
                 { type !== 'title' && <button className='bg-[white] outline-0 hover:bg-opacity-40 duration-150 text-[white] bg-opacity-20 py-2 px-4 rounded-[8px]' onClick={handleModal}>?</button>}
                 <div className='relative w-max flex'>
