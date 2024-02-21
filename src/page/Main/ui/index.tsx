@@ -20,7 +20,7 @@ const MainPage = () => {
 
     const handleClick = async () => {
 
-        const res = await axios.get(`https://kinobox.tv/api/players/all?${title ? `${type}=${title}` : `${type}=${theid}`}`, {
+        const res = await axios.get(`https://kinobox.tv/api/players/main?${title ? `${type}=${title}` : `${type}=${theid}`}`, {
             headers: {
                 'Content-Type': 'application/x-www-form-urlencoded'
             }
