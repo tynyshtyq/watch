@@ -90,8 +90,14 @@ const MainPage = () => {
                     </div>
                 </div>
                 :
-                <div className='w-[698px] phone:w-[calc(100%-1rem)] h-[389px] bg-[rgba(0,0,0,0.4)] rounded-[8px] mx-auto mt-6 flex'>
-                </div>
+                type === 'kinopoisk' ?
+                    <Image  src={require('../assets/ScreenRecording2024-02-21at13.11.40-ezgif.com-video-to-gif-converter.gif').default} alt='modal' width={698} height={398} className='mx-auto' />
+                :
+                type === 'imdb' ?
+                    <Image src={require('../assets/ScreenRecording2024-02-21at13.22.19-ezgif.com-video-to-gif-converter.gif').default} alt='modal' width={698} height={398}  className='mx-auto'/>
+                    :
+                    <div className='w-[698px] phone:w-[calc(100%-1rem)] h-[389px] bg-[rgba(0,0,0,0.4)] rounded-[8px] mx-auto mt-6 flex'>
+                    </div>
             }
             {
                 modal && 
