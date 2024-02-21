@@ -24,6 +24,7 @@ const MainPage = () => {
                 'Content-Type': 'application/x-www-form-urlencoded'
             }
         });
+        
         if (res.data) {
             const uniqueSources: { [key: string]: boolean } = {};
             const filteredPlayers = res.data.filter(player => {
