@@ -2,11 +2,15 @@
 import axios from 'axios';
 import Image from 'next/image';
 import Link from 'next/link';
+import { useParams, usePathname, useRouter, useSearchParams } from 'next/navigation';
 import React, { ChangeEvent, useEffect, useState } from 'react';
 
 const MainPage = () => {
 
-    const [players, setPlayers] = useState<{iframeUrl: string, source: string}[]>()
+    const [players, setPlayers] = useState<{iframeUrl: string, source: string}[]>();
+    const router = useRouter();
+    const params = useSearchParams();
+    const [loading, setLoading] = useState(false);
 
     const [theid, setId] = useState<string>('');
     const [title, setTitle] = useState<string>('');
@@ -19,28 +23,56 @@ const MainPage = () => {
 
     const [modal, setModal] = useState(false);
 
-    const handleClick = async () => {
-        const res = await axios.get<{ iframeUrl: string; source: string; }[]>(`https://kinobox.tv/api/players/all?${title ? `${type}=${title}` : `${type}=${theid}`}`, {
-            headers: {
-                'Content-Type': 'application/x-www-form-urlencoded'
-            }
-        });
-        
-        if (res.data && res.data.length > 0) {
-            
-            const uniqueSources: { [key: string]: boolean } = {};
-            const filteredPlayers = res.data.filter(player => {
-                if (!uniqueSources[player.source]) {
-                    uniqueSources[player.source] = true;
-                    return true;
+    useEffect(() => {
+        setLoading(true);
+        const queryType = params.get('type')?.trim();
+        const query = params.get('q')?.trim();
+
+        const getRes = async (type: string, query: string) => {
+            const res = await axios.get<{ iframeUrl: string; source: string; }[]>(`https://kinobox.tv/api/players/all?${type}=${query}`, {
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded'
                 }
-                return false;
             });
-            setPlayers(filteredPlayers);
+
+            return res.data
         }
-        else {
-            setError('The movie could not be found, please enter the correct ID or name')
+
+        if (queryType && query){
+            const searchRes = getRes(queryType, query);
+
+            searchRes
+            .then((res) => {
+                if (res && res.length > 0) {
+                    const uniqueSources: { [key: string]: boolean } = {};
+                    const filteredPlayers = res.filter(player => {
+                        if (!uniqueSources[player.source]) {
+                            uniqueSources[player.source] = true;
+                            return true;
+                        }
+                        return false;
+                    });
+                    setPlayers(filteredPlayers);
+                }
+                else {
+                    setError('The movie could not be found, please enter the correct ID or name')
+                }
+            })
+            .catch((err) => {
+                console.log(err);
+            })
+            .finally(() => {
+                setLoading(false)
+            })
         }
+    }, [params])
+
+    const handleClick = async () => {
+        const queryType = params.get('type')?.trim();
+        const query = params.get('q')?.trim();
+        if (queryType === type && query === (type === 'title' ? title : theid)) return;
+        router.push(`?type=${type}&q=${type === 'title' ? title : theid}`);
+        setLoading(true)
     };
     
 
@@ -92,6 +124,7 @@ const MainPage = () => {
                 <button className='bg-[white] outline-0 hover:bg-opacity-40 duration-150 text-[white] bg-opacity-20 py-2 px-4 rounded-[8px]' onClick={handleClick}>Search</button>
                 
             </div>
+
             {
                 players ?
                 <div className='flex mx-auto items-center gap-4 relative mt-6'>
@@ -114,6 +147,7 @@ const MainPage = () => {
                     <div className='w-[698px] phone:w-[calc(100%-1rem)] h-[389px] bg-[rgba(0,0,0,0.4)] rounded-[8px] mx-auto mt-6 flex'>
                     </div>
             }
+
             {
                 modal && 
                 <div className='flex items-center justify-center fixed z-[100000] top-0 left-0 bottom-0 right-0 bg-[rgba(0,0,0,0.7)]' onClick={() => setModal(false)}>
@@ -135,6 +169,19 @@ const MainPage = () => {
             }
 
             <p className='phone:w-[calc(100%-2rem)] text-text text-center !text-[14px] opacity-[0.5] mt-auto mx-auto mb-4'>If you encounter an error or want to suggest something - write to <Link target='_blank' href={'https://t.me/dastan_tynyshtyk'} className='text-text'>@dastan_tynyshtyk</Link> 😊 </p>
+
+            {
+                loading &&  <div className='fixed top-0 bottom-0 left-0 right-0 flex items-center justify-center bg-[rgba(0,0,0,0.7)]'>
+                                <div
+                                    className="inline-block h-8 w-8 animate-spin rounded-full border-4 border-solid border-current border-r-transparent align-[-0.125em] motion-reduce:animate-[spin_1.5s_linear_infinite] border-[white]"
+                                    role="status">
+                                    <span
+                                    className="!absolute !-m-px !h-px !w-px !overflow-hidden !whitespace-nowrap !border-0 !p-0 ![clip:rect(0,0,0,0)]"
+                                    >Loading...</span>
+                                </div>
+                            </div>
+            }
+
         </div>
     );
 };
