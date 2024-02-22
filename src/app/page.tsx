@@ -1,8 +1,18 @@
-import { MainPage } from "@/page";
-import Image from "next/image";
+import dynamic from 'next/dynamic';
+import React, { Suspense } from 'react';
 
-export default function Home() {
+const MainPageWithSuspense = dynamic(() => import('@/page/Main'), {
+  ssr: false,
+});
+
+function HomePage() {
   return (
-    <MainPage />
+    <div>
+      <Suspense fallback={<div>Loading...</div>}>
+        <MainPageWithSuspense />
+      </Suspense>
+    </div>
   );
 }
+
+export default HomePage;

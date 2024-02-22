@@ -3,7 +3,7 @@ import axios from 'axios';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useParams, usePathname, useRouter, useSearchParams } from 'next/navigation';
-import React, { ChangeEvent, useEffect, useState } from 'react';
+import React, { ChangeEvent, useEffect, useState} from 'react';
 
 const MainPage = () => {
 
@@ -24,15 +24,19 @@ const MainPage = () => {
     const [modal, setModal] = useState(false);
 
     useEffect(() => {
-        setLoading(true);
+        
         const queryType = params.get('type')?.trim();
         const query = params.get('q')?.trim();
 
         const getRes = async (type: string, query: string) => {
+            setLoading(true);
             const res = await axios.get<{ iframeUrl: string; source: string; }[]>(`https://kinobox.tv/api/players/all?${type}=${query}`, {
                 headers: {
                     'Content-Type': 'application/x-www-form-urlencoded'
                 }
+            })
+            .finally(() => {
+                setLoading(false)
             });
 
             return res.data
@@ -61,9 +65,7 @@ const MainPage = () => {
             .catch((err) => {
                 console.log(err);
             })
-            .finally(() => {
-                setLoading(false)
-            })
+            
         }
     }, [params])
 
