@@ -10,6 +10,7 @@ const MainPage = () => {
 
     const [theid, setId] = useState<string>('');
     const [title, setTitle] = useState<string>('');
+    const [error, setError] = useState<string | null>(null)
 
     const [type, setType] = useState<'kinopoisk' | 'imdb' | 'title'>('kinopoisk');
 
@@ -25,7 +26,8 @@ const MainPage = () => {
             }
         });
         
-        if (res.data) {
+        if (res.data && res.data.length > 0) {
+            
             const uniqueSources: { [key: string]: boolean } = {};
             const filteredPlayers = res.data.filter(player => {
                 if (!uniqueSources[player.source]) {
@@ -35,6 +37,9 @@ const MainPage = () => {
                 return false;
             });
             setPlayers(filteredPlayers);
+        }
+        else {
+            setError('The movie could not be found, please enter the correct ID or name')
         }
     };
     
@@ -119,6 +124,13 @@ const MainPage = () => {
                             <Image src={require('../assets/ScreenRecording2024-02-21at13.22.19-ezgif.com-video-to-gif-converter.gif').default} alt='modal' width={698} height={398} />
                     }
                     
+                </div>
+            }
+
+            {
+                error && 
+                <div className='fixed flex top-0 bottom-0 left-0 bg-[rgba(0,0,0,0.7)] right-0 z-[100000] items-center justify-center' onClick={() => setError(null)}>
+                    <p className='p-4 text-[white] rounded-[8px] bg-[#1f1f1f] w-[calc(100%-1rem)] text-center'>{error}</p>
                 </div>
             }
 
