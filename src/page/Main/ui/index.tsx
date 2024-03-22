@@ -1,3 +1,7 @@
+// Date: 03.08.2021
+// Time: 19:00
+// Author: Dastan
+// Description: Main page
 'use client'
 import axios from 'axios';
 import Image from 'next/image';
@@ -76,6 +80,9 @@ const MainPage = () => {
         router.push(`?type=${type}&q=${type === 'title' ? title : theid}`);
         setLoading(true)
     };
+
+    
+    
     
 
     useEffect(() => {
@@ -170,7 +177,7 @@ const MainPage = () => {
                 </div>
             }
 
-            <p className='phone:w-[calc(100%-2rem)] text-text text-center !text-[14px] opacity-[0.5] mt-auto mx-auto mb-4'>If you encounter an error or want to suggest something - write to <Link target='_blank' href={'https://t.me/dastan_tynyshtyk'} className='text-text'>@dastan_tynyshtyk</Link> 😊 </p>
+            <p className='phone:w-[calc(100%-2rem)] text-text text-center !text-[14px] opacity-[0.5] mt-auto mx-auto mb-4'>If you encounter an error or want to suggest something - write to <Link target='_blank' href={'https://t.me/rinatulyd'} className='text-text'>@rinatulyd</Link> 😊 </p>
 
             {
                 loading &&  <div className='fixed top-0 bottom-0 left-0 right-0 flex items-center justify-center bg-[rgba(0,0,0,0.7)]'>
