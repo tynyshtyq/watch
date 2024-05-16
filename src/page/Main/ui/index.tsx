@@ -34,7 +34,7 @@ const MainPage = () => {
 
         const getRes = async (type: string, query: string) => {
             setLoading(true);
-            const res = await axios.get<{ iframeUrl: string; source: string; }[]>(`https://kinobox.tv/api/players/all?${type}=${query}`, {
+            const res = await axios.get<{ iframeUrl: string; source: string; }[]>(`https://kinobox.tv/api/players?${type}=${query}`, {
                 headers: {
                     'Content-Type': 'application/x-www-form-urlencoded'
                 }
