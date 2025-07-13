@@ -16,7 +16,7 @@ const MainPage = () => {
                 height={400}
                 className='mx-auto'
             />
-
+            <p className='mx-auto w-full mt-0 p-0 text-center text-text max-w-[600px]'>Contact me if you have any ideas for projects <a className='underline' href="https://t.me/rinatulyd">@rinatulyd</a></p>
         </div>
     );
 };
